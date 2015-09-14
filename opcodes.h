@@ -34,6 +34,14 @@ void cleanup(FILE **fp)
   *fp = NULL;
 }
 
+#define NUM_OPCODES 22
+#define VALID_OPCODE(opcode) ((unsigned)(opcode) < NUM_OPCODES)
+const char *opcode_alias[NUM_OPCODES] = {
+  "halt", "set", "push", "pop", "eq", "gt", "jmp",
+  "jt", "jf", "add", "mult", "mod", "and", "or", "not",
+  "rmem", "wmem", "call", "ret", "out", "in", "noop"
+};
+
 /* stop execution and terminate program */
 void halt_callback(FILE **fp)
 {
