@@ -7,7 +7,7 @@
 int main(int argc, const char *argv[])
 {
   FILE *fp = NULL;
-  uint16_t opcode;
+  uint16_t opcode; /* opcode instruction */
 
   if (argc < 2) exit(1);
   fp = fopen(argv[1], "rb+");
