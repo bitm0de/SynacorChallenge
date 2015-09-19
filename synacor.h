@@ -4,7 +4,28 @@
 #define STACK_ALLOCATION_SIZE 1024
 #define HEAP_ALLOCATION_SIZE 65535
 
-unsigned char *virtual_heap;
+uint16_t *virtual_heap;
+
+/* reads file contents into virtual_heap buffer.
+ * returns: total bytes read, or -1 in case of an error 
+ * ----------------------------------------------------- */
+size_t init_alloc_program_mem(const char *file)
+{
+  FILE *fp = NULL;
+  long size;
+  size_t bytes_read;
+
+  if (!(fp = fopen(file, "rb+"))) return 0;
+  fseek(fp, 0, SEEK_END);
+  size = ftell(fp);
+  rewind(fp);
+
+  virtual_heap = malloc(size);
+  bytes_read = fread(virtual_heap, sizeof(*virtual_heap), size / 2, fp);
+
+  fclose(fp);
+  return bytes_read;
+}
 
 #include "stack.h"
 stack program_stack;

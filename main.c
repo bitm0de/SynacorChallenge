@@ -7,38 +7,48 @@
 int main(int argc, const char *argv[])
 {
   int disassemble = 0; /* determines mode */
-  FILE *fp = NULL;
+  size_t mem_alloc = 0;
   uint16_t opcode; /* opcode instruction */
+  uint16_t *eip = NULL; /* instruction pointer */
 
   if (argc < 2) exit(1);
-  fp = fopen(argv[1], "rb+");
-  if (!fp) exit(1);
-
-  if (argc > 2)
-    disassemble = !strncmp("-d", argv[2], 2);
+  if (argc > 2) disassemble = !strncmp("-d", argv[2], 2);
 
   init_stack();
-  init_heap_memory();
+  mem_alloc = init_alloc_program_mem(argv[1]);
+  if (!mem_alloc) exit(1);
+
+  eip = virtual_heap;
 
   /* NOTE: "Executing self-test..." stage in bin file makes a jump to
    * a location in the virtual address space where an invalid opcode [4864]
    * is found. This issue is circumvented by a macro; VALID_OPCODE */
   if (disassemble)
   {
-    while (fread(&opcode, 2, 1, fp) == 1)
+    while ((size_t)(eip - virtual_heap) < mem_alloc)
     {
-      write_instruction(opcode, &fp);
+      opcode = *eip;
+      ++eip;
+      write_instruction(opcode, &eip, 0);
     }
   }
   else
   {
-    while (fread(&opcode, 2, 1, fp) == 1)
+    while ((size_t)(eip - virtual_heap) < mem_alloc)
     {
-      if (VALID_OPCODE(opcode))
-        callback_ops[opcode](&fp);
+      opcode = *eip;
+      ++eip;
+
+      /*
+      write_instruction(opcode, &eip, 1);
+      */
+
+      /* if (VALID_OPCODE(opcode)) */
+
+      callback_ops[opcode](&eip);
     }
   }
 
-  cleanup(&fp);
+  if (virtual_heap) free(virtual_heap);
   exit(0);
 }
