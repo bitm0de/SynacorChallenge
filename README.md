@@ -15,6 +15,3 @@ Apple gift cards and fame. While we're
 not giving away physical prizes any
 more, we still hope you'll find the
 challenges fun and interesting!
-
-## Preview
-![Test run](http://i.imgur.com/iPZzjsD.png)
