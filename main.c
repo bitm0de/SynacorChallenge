@@ -20,9 +20,6 @@ int main(int argc, const char *argv[])
 
   eip = virtual_heap;
 
-  /* NOTE: "Executing self-test..." stage in bin file makes a jump to
-   * a location in the virtual address space where an invalid opcode [4864]
-   * is found. This issue is circumvented by a macro; VALID_OPCODE */
   if (disassemble)
   {
     while ((size_t)(eip - virtual_heap) < mem_alloc)
