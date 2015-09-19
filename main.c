@@ -35,13 +35,6 @@ int main(int argc, const char *argv[])
     {
       opcode = *eip;
       ++eip;
-
-      /*
-      write_instruction(opcode, &eip, 1);
-      */
-
-      /* if (VALID_OPCODE(opcode)) */
-
       callback_ops[opcode](&eip);
     }
   }
