@@ -1,5 +1,4 @@
 # SynacorChallenge
-https://challenge.synacor.com
 
 This challenge was given by Synacor at
 php[tek] and OSCON in years past. Now,
@@ -15,3 +14,5 @@ Apple gift cards and fame. While we're
 not giving away physical prizes any
 more, we still hope you'll find the
 challenges fun and interesting!
+
+https://challenge.synacor.com
