@@ -2,9 +2,11 @@
 #define __STACK_H__
 
 #include <stdlib.h>
-#include <stdint.h>
 
-#define STACK_TYPE uint32_t
+#ifndef STACK_TYPE
+#  include <stdint.h>
+#  define STACK_TYPE uint32_t
+#endif
 
 typedef struct stack_
 {
